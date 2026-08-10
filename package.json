@@ -1,0 +1,39 @@
+{
+  "name": "entry-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.3",
+    "@vercel/blob": "2.7.0",
+    "bcryptjs": "3.0.3",
+    "next": "15.5.23",
+    "next-auth": "5.0.0-beta.32",
+    "prisma": "6.19.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-markdown": "10.1.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "3",
+    "@tailwindcss/postcss": "4",
+    "@tailwindcss/typography": "0.5.20",
+    "@types/bcryptjs": "2.4.6",
+    "@types/node": "20",
+    "@types/react": "19",
+    "@types/react-dom": "19",
+    "eslint": "9",
+    "eslint-config-next": "15.5.23",
+    "tailwindcss": "4",
+    "typescript": "5",
+    "vite-tsconfig-paths": "6.1.1",
+    "vitest": "4.1.10"
+  }
+}
