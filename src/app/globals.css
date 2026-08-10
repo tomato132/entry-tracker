@@ -1,0 +1,241 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  /* 暖纸纪事设计令牌 */
+  --color-base: #ece4d9;
+  --color-paper: #f4f0ea;
+  --color-panel: #fffbf5;
+  --color-ink: #4f483e;
+  --color-ink-deep: #2f2a22;
+  --color-ink-soft: #8a7d6b;
+  --color-ink-faint: #b3a894;
+  --color-line: rgba(79, 72, 62, 0.14);
+  --color-line-strong: rgba(79, 72, 62, 0.32);
+  --color-acid: #ffc198;
+  --color-acid-deep: #f54001;
+  --color-accent: #f54001;
+
+  --font-sans-cn: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono-cn: "SF Mono", "JetBrains Mono", Consolas, "Courier New", monospace;
+}
+
+html {
+  background: var(--color-base);
+}
+
+body {
+  background: var(--color-base);
+  color: var(--color-ink);
+  font-family: var(--font-sans-cn);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  /* 点阵纸纹 + 顶部暖光，固定不滚动 */
+  background-image:
+    radial-gradient(ellipse 70% 45% at 50% -10%, rgba(255, 251, 245, 0.7), transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='1.2' cy='1.2' r='1.2' fill='rgba(79,72,62,0.09)'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+}
+
+::selection {
+  background: var(--color-acid-deep);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(79, 72, 62, 0.22);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.font-mono-cn {
+  font-family: var(--font-mono-cn);
+}
+
+/* 允许鼠标选中复制一切文本（覆盖浏览器对按钮等控件的默认禁止） */
+body,
+button,
+input,
+textarea,
+select,
+[role="button"] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* 大写微型标签 */
+.micro-label {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* 入场动效 */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-rise {
+  animation: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* 点状分隔线容器 */
+.divide-dotted > * + * {
+  border-top: 1px dotted var(--color-line-strong);
+}
+
+/* 卡片弥散软阴影 */
+.card-soft {
+  box-shadow: 7px 7px 40px 6px #00000017;
+}
+
+/* 马克笔高亮（选中态） */
+.hl {
+  background: linear-gradient(
+    to top,
+    var(--color-acid) 0.55em,
+    transparent 0.55em
+  );
+}
+
+/* 下划线动画 */
+.ink-link {
+  position: relative;
+}
+.ink-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.ink-link:hover::after,
+.ink-link[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* 输入框 */
+.ink-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--color-line-strong);
+  outline: none;
+  color: var(--color-ink);
+  transition: border-color 0.3s ease;
+}
+.ink-input:focus {
+  border-bottom-color: var(--color-acid-deep);
+  border-bottom-width: 2px;
+}
+.ink-input::placeholder {
+  color: var(--color-ink-faint);
+}
+
+/* 高光区内的输入框 */
+.ink-input-on-acid {
+  border-bottom-color: rgba(79, 72, 62, 0.35);
+}
+.ink-input-on-acid:focus {
+  border-bottom-color: var(--color-ink-deep);
+}
+.ink-input-on-acid::placeholder {
+  color: rgba(79, 72, 62, 0.45);
+}
+
+/* 待办勾选框：打勾变烧橙 */
+.ink-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--color-ink-soft);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  background: transparent;
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.ink-checkbox:hover {
+  transform: scale(1.08);
+  border-color: var(--color-ink);
+}
+.ink-checkbox:checked {
+  background: var(--color-acid-deep);
+  border-color: var(--color-acid-deep);
+}
+.ink-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2.5px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* 主按钮：烧橙胶囊 */
+.ink-btn-primary {
+  background: var(--color-acid-deep);
+  color: #fff;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+}
+.ink-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -8px rgba(245, 64, 1, 0.5);
+}
+.ink-btn-primary:active {
+  transform: translateY(0);
+}
+.ink-btn-primary:disabled {
+  opacity: 0.4;
+  transform: none;
+}
+
+/* 记录行：箭头悬停右浮 */
+.row-arrow {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  transform: translateX(-4px);
+}
+.group:hover .row-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Markdown 正文 */
+.prose-ink {
+  line-height: 1.9;
+  color: var(--color-ink);
+}
+.prose-ink img {
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+}
+.prose-ink a {
+  color: var(--color-acid-deep);
+  text-decoration: underline;
+  text-decoration-color: var(--color-acid);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
